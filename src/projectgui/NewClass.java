@@ -72,11 +72,12 @@ public class NewClass {
 //    private static double mjui1j;
 
     public static void main(String[] args) {
-        tan_alfa1 = Math.atan(1 / m);
+        tan_alfa1 = Math.atan(1 / m); //получаем угол в радиансах
 
         System.out.println("tan_alfa1 " + Math.toDegrees(tan_alfa1));
 
         b0 = l_sh + 2 * hb * Math.tan(Math.toRadians(30));
+        System.out.println("b0 "+b0);
         a = (b_pl - b0) / 2;
 
         if (Math.abs(y - 0.5 * b0) <= l_sh / 2) {
