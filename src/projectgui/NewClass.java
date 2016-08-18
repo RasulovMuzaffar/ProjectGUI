@@ -13,11 +13,11 @@ public class NewClass {
 
     //Геометрия
     private static double H = 6;//насыпь высота
-    private static double b_pl=7.6;//ширина основной площадки
+    private static double b_pl = 7.6;//ширина основной площадки
     private static double m = 2;//заложение откоса
     private static double B0 = 6;//ширина площадки загружения
-    private static double hb = 6;//толщина балласта
-    private static double l_sh = 6;//длина шпалы
+    private static double hb = 0.35;//толщина балласта
+    private static double l_sh = 2.7;//длина шпалы
 
     //Характеристики грунтов
     private static double gamma = 6;//объемный вес грунта
@@ -68,6 +68,9 @@ public class NewClass {
     private static double alfa;
     private static double tan_alfa;
     private static double mju;
+    private static double delta_iO;
+    private static double delta_i;
+    private static double sigma_iO;
 //    private static double mjuij1;
 //    private static double mjui1j;
 
@@ -77,9 +80,9 @@ public class NewClass {
         System.out.println("tan_alfa1 " + Math.toDegrees(tan_alfa1));
 
         b0 = l_sh + 2 * hb * Math.tan(Math.toRadians(30));
-        System.out.println("b0 "+b0);
+        System.out.println("b0 " + b0);
         a = (b_pl - b0) / 2;
-
+        System.out.println("a " + a);
         if (Math.abs(y - 0.5 * b0) <= l_sh / 2) {
             Fi_y = 0;
         } else if (Math.abs(y - 0.5 * b0) > l_sh / 2) {
@@ -97,6 +100,8 @@ public class NewClass {
         n = Math.log(delta1); //-------------------
 //        delta1_0 = 
 
+        delta1_0 = delta2_1 + delta2_2;
+
         Azy = A0 * Math.exp(n * z - delta2_1 * Fi_y - delta2_2 * (y - l_sh / 2) - delta3 * Fihi_j);
 
         Kc_1 = 1 - Kc;
@@ -112,8 +117,7 @@ public class NewClass {
             Fi1hi = tan_alfa1;
         }
 
-        delta1_0 = delta2_1 + delta2_2;
-
+//        delta1_0 = delta2_1 + delta2_2;
         EF = K * A0 * Math.exp(n * z - delta1_0 * y + 1.35 * delta1_0 + Math.abs(n) * 0.667 * Fi1hi * tan_alfa1 - K * Azy);
 
         B = 0.15 * gamma * H * A - EF * ((delta1_0 - Math.abs(n) + 0.667 * Fi1hi * tan_alfa1) * Math.sin(Math.toRadians(2 * delta))
@@ -134,6 +138,7 @@ public class NewClass {
 
         tan_alfa = Math.tan(alfa);
         System.out.println("tan_alfa " + Math.toDegrees(tan_alfa));
+
         mju = Math.PI / 4 - Fidn / 2;
 
         if (y > a + H / tan_alfa1) {
@@ -146,7 +151,8 @@ public class NewClass {
 
         sigma = (Fia * Math.cos(alfa) + Cdn * Math.cos(2 * (delta - alfa))) / (1 - Math.sin(Fidn) * Math.cos(2 * (delta - alfa)));
         System.out.println("sigma --> " + sigma);
-        //.......................ЗОНА 1
+
+//.......................ЗОНА 1
         delta = 1 / 2 * Math.asin(Fia * Math.sin(alfa)
                 * (Cdn + Fia * Math.tan(Fidn) * Math.cos(alfa)
                 - Math.sqrt(Math.pow(Cdn + Fia * Math.cos(alfa) * Math.tan(Fidn), 2)
@@ -158,6 +164,18 @@ public class NewClass {
 
 //        mju =  
 ////////////////////////////////////////////////////
+//// формулы 4.42 и 4.43
+NewClass nc = new NewClass();
+//        int i = 0;
+//delta_iO = (Math.PI - 2*alfa/20)*i + alfa;
+        sigma_iO = ((gamma * Fia * Math.cos(alfa) - Cdn * Math.cos(Fidn) * Math.cos(2 * delta_iO * Math.tan(Fidn)))
+                / (1 - Math.sin(Fidn) * Math.cos(2 * nc.delta_iO(10) - alfa)))*Math.exp(2*delta_i*Math.tan(Fidn));
+
+    }
+//формула 4.42
+    double delta_iO(int i) {
+        delta_iO = (Math.PI - 2 * alfa / 20) * i + alfa;
+        return delta_iO;
     }
 
 }
