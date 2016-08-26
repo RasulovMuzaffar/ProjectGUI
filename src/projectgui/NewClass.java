@@ -14,7 +14,7 @@ public class NewClass {
     //Геометрия
     private static double H = 6;//насыпь высота
     private static double b_pl = 7.6;//ширина основной площадки
-    private static double m = 2;//заложение откоса
+    private static double m = 1;//заложение откоса
     private static double B0 = 6;//ширина площадки загружения
     private static double hb = 0.35;//толщина балласта
     private static double l_sh = 2.7;//длина шпалы
@@ -78,6 +78,8 @@ public class NewClass {
         tan_alfa1 = Math.atan(1 / m); //получаем угол в радиансах
 
         System.out.println("tan_alfa1 " + Math.toDegrees(tan_alfa1));
+        System.out.println("tan_alfa1 " + Math.tan(tan_alfa1));
+        System.out.println("tan_alfa1 " + Math.PI*Math.toDegrees(tan_alfa1)/180);
 
         b0 = l_sh + 2 * hb * Math.tan(Math.toRadians(30));
         System.out.println("b0 " + b0);
